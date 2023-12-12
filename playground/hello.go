@@ -94,7 +94,12 @@ func main() {
 
     // basics.DisplayTime()
     // basics.LoopBasics()
-    basics.StructBasics()
+    // basics.StructBasics()
+
+    // basics.PointerBasics()
+    // basics.FunctionBasics()
+    // basics.ArrayBasics()
+    basics.SliceBasics()
 
 
 }
