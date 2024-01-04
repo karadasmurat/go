@@ -193,6 +193,8 @@ func modifyStruct(rect *Rectangle) {
 }
 
 func StructBasics() {
+	fmt.Println("Struct Basics")
+	fmt.Println("-------------")
 
 	// v0 Creating an instance of the Wizard struct
 	var malfoy model.Wizard
@@ -276,6 +278,9 @@ type Vertex struct {
 }
 
 func PointerBasics() {
+
+	fmt.Println("Pointer Basics")
+	fmt.Println("--------------")
 
 	// Pointer decleration using the * symbol followed by the type of the variable it will point to.
 	// The type *T is a pointer to a T value:
