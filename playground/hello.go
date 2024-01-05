@@ -6,7 +6,7 @@ package main
 // Alternatively, you can use parentheses for multiple imports
 import (
 	"fmt"
-	"playground/networking"
+	"playground/basics"
 )
 
 func raining() bool {
@@ -47,13 +47,15 @@ func main() {
 	// basics.ArrayBasics()
 	// basics.SliceBasics()
 	// basics.MapBasics()
-	// basics.InterfaceBasics()
+	basics.InterfaceBasics()
 	// basics.MethodBasics()
 	// basics.DeferBasics()
 
 	// basics.LogBasics()
+	// basics.BufferedScan()
+	// basics.FileIOBasics()
 
-	networking.NetworkingBasics()
+	// networking.NetworkingBasics()
 
 	// exercises.NumberGuessingGame()
 	// exercises.ScoreManager()

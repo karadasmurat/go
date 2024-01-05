@@ -14,13 +14,15 @@ func JsonBasics() {
 
 	// Marshaling: Converting a Go struct to JSON
 	// The resulting jsonData is a byte slice containing the JSON-formatted data
-	jsonData, err := json.Marshal(potter)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
+	// if jsonData, err := json.Marshal(potter); err == nil {
+	// 	fmt.Println("json.Marshal: ", string(jsonData))
+	// }
 
-	fmt.Println(string(jsonData))
+	if jsonData, err := json.Marshal(potter); err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println(string(jsonData))
+	}
 
 	// JSON data as a string
 	jsonString := `{"name":"Malfoy", "house":"Slytherin"}`
@@ -28,9 +30,7 @@ func JsonBasics() {
 	// variable to hold the unmarshaled data
 	var wiz model.Wizard
 
-	err = json.Unmarshal([]byte(jsonString), &wiz)
-
-	if err != nil {
+	if err := json.Unmarshal([]byte(jsonString), &wiz); err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
