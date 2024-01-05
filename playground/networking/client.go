@@ -28,9 +28,9 @@ func NetworkingBasics() {
 	fmt.Println("-----------------")
 
 	// run the server
-	go RunServer()
+	RunServer()
 
 	// run client
-	simpleClient_GET("http://localhost:8080")
+	// simpleClient_GET("http://localhost:8080/wizards")
 	// simpleClient_GET("http://www.google.com/robots.txt")
 }
