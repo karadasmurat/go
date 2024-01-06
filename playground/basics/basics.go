@@ -413,13 +413,7 @@ type MyInterface interface {
 	// ... additional methods
 }
 
-func MethodBasics() {
-	fmt.Println("Method Basics")
-	fmt.Println("----------------")
 
-	rect := Rectangle{Width: 5, Height: 10}
-	fmt.Println("Area:", rect.Area()) // Method call without explicit 'this' or 'self'
-}
 
 func FunctionBasics() {
 	// Variables of a function type
