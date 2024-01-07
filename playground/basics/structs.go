@@ -7,6 +7,52 @@ import (
 	"unsafe"
 )
 
+type Opts struct {
+	configItem1 int
+	configItem2 string
+	configItem3 bool
+	timeout     int
+	tls         bool
+}
+
+func (o *Opts) withTLS() *Opts {
+	o.tls = true // Pointer receiver - allowing the method to modify the original instance.
+	return o
+}
+
+func NewOpts() *Opts {
+	// Can we do this on C? Passing the address of a local variable!
+	return &Opts{
+		configItem1: 42,
+		configItem2: "Default",
+		configItem3: true,
+	}
+}
+
+type Server struct {
+	Opts
+}
+
+// Constructor function that returns a pointer to a new instance of Server
+func NewServer(opts *Opts) *Server {
+	// Can we do this on C? Passing the address of a local variable!
+	return &Server{
+		Opts: *opts,
+	}
+}
+
+func pointerToStruct() {
+
+	fmt.Println("Pointer to Struct")
+	fmt.Println("-----------------")
+
+	potter := model.Wizard{Name: "Potter", House: "Gryffindoor"}
+
+	fmt.Printf("%v @ %p\n", potter, &potter)             // {Potter Gryffindoor} @ 0x140000b6060
+	fmt.Printf("%v @ %p\n", potter.Name, &potter.Name)   // Potter @ 0x140000b6060
+	fmt.Printf("%v @ %p\n", potter.House, &potter.House) // Gryffindoor @ 0x140000b6070
+}
+
 // Note that struct is a value type.
 func tryToModifyStruct(rect Rectangle) {
 	rect.Width = 0
@@ -95,11 +141,90 @@ func StructBasics() {
 	modifyStruct(&myRect)
 	fmt.Println(myRect) // Modified! {0 50}
 
+	pointerToStruct()
+
 	embeddedStruct()
+
+	author1 := model.Author{Name: "author1"}
+	fmt.Printf("author1@ %p\n", &author1) // author1@ 0x1400008e090
+	book1 := model.Book{Title: "title01", Author: &author1}
+	fmt.Printf("book1@ %p book1.Author= %p\n", &book1, book1.Author) // book1@ 0x140000c0018 book1.Author= 0x1400008e090
+
+	fmt.Println("Before function call: ", book1.Title, book1.Author.Name) // Before function call:  title01 author1
+	acceptStructContainingPointer(book1)
+	fmt.Println("After function call: ", book1.Title, book1.Author.Name) // After function call:  title01 Modified Name
+
+	configBasics()
+
+	constructorsAndMutatorMethods()
 }
 
 func embeddedStruct() {
 
 	contact := model.NewContact("MK", "IST", "TR")
 	fmt.Println(contact.String()) // Name: MK, Address: IST, TR
+}
+
+// note that function accepts a struct, which has a pointer field. (like slice)
+func acceptStructContainingPointer(b model.Book) {
+	// b is a copy of the struct, at a new address
+	// however, the value of b.Author is the same as the argument (the same value, at a different address)
+	fmt.Printf("b@ %p b.author= %p\n", &b, b.Author) // b@ 0x140000c0030 b.author= 0x1400008e090
+
+	// modify title (value) will NOT be visible
+	b.Title = "Modified Title"
+
+	// modify author (through pointer) WILL BE VISIBLE
+	// b.Author.Name = "Modified Name" // b.Author->Name
+
+	// modify pointer itself - will NOT be visible
+	// b.Author = &model.Author{Name: "author2"}
+
+	// what if we change the original as well?
+	tmp := b.Author // 0x1400008e090
+	b.Author = &model.Author{Name: "author2"}
+	tmp.Name = "author2"
+
+	// return the modified struct to make modifications visible
+}
+
+func constructorsAndMutatorMethods() {
+	var c model.Counter = model.NewCounter(0)
+	var cptr *model.Counter = model.NewCounterPtr(0)
+
+	c.Increment()
+	cptr.Increment() // Go allows implicit dereferencing
+
+	fmt.Println(c.Count)
+	fmt.Println(cptr.Count)
+}
+
+func configBasics() {
+
+	// v1. Initializing a struct with a composite literal
+	// This creates a new instance of Struct and initializes its fields directly.
+	// var s1 Server = Server{maxConn: 1, id: "Server1", tls: false}
+	// fmt.Println(s1) // {1 Server1 false}
+
+	// v2. Using the constructor to create a new instance of Struct.
+	// var s2 *Server = NewServer(1, "Server2", false)
+
+	// Accessing the fields of the created struct.
+	// Implicit dereferencing: Go automatically dereferences the pointer for you: (*s1).tls
+	// fmt.Println(s2.tls)
+	// fmt.Println((*s2).tls)
+
+	// v3.a Using the constructor to create a new instance of Struct.
+	// Empty config
+	var s3 *Server = NewServer(&Opts{})
+	fmt.Println(s3.configItem3)
+
+	// v3.b Using a default config
+	s4 := NewServer(NewOpts())
+	fmt.Println(s4.tls)
+
+	// v3.b Using a default config
+	s5 := NewServer(NewOpts().withTLS())
+	fmt.Println(s5.tls)
+
 }
