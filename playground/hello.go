@@ -38,12 +38,13 @@ func main() {
 	// basics.SwitchBasics()
 	// basics.DisplayTime()
 	// basics.LoopBasics()
-	basics.StructBasics()
-	// basics.MethodBasics()
+	// basics.StructBasics()
+	basics.MethodBasics()
 	// basics.JsonBasics()
 
 	// basics.PointerBasics()
 	// basics.FunctionBasics()
+	// basics.ImmutabilityBasics()
 	// basics.ErrorBasics()
 	// basics.ArrayBasics()
 	// basics.SliceBasics()
@@ -64,7 +65,3 @@ func main() {
 	// exercises.ScoreManager()
 
 }
-
-
-
-
