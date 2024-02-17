@@ -2,6 +2,7 @@ package basics
 
 import (
 	"fmt"
+	"playground/collections"
 	"reflect"
 )
 
@@ -346,6 +347,15 @@ func SliceBasics() {
 	for index, value := range a {
 		fmt.Println(index, value)
 	}
+
+	// Searching
+	numbers := []int{-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	q := 1
+	if i, ok := collections.Contains(numbers, q); ok {
+		fmt.Println(q, "found at index:", i)
+	} else {
+		fmt.Println("Not Found", q)
+	}
 }
 
 func MapBasics() {
@@ -413,39 +423,6 @@ type MyInterface interface {
 	// ... additional methods
 }
 
-
-
-func FunctionBasics() {
-	// Variables of a function type
-	// Declare i to be a function that returns an int value:
-	var i func() int
-	i = giveMeZero
-
-	// calling a variable of a function type
-	val := i()
-	fmt.Println(val)
-
-	// variable number of arguments
-	fmt.Println(sum(1))
-	fmt.Println(sum(1, 2))
-	fmt.Println(sum(1, 2, 3))
-
-	// closures
-	fmt.Println(multiply(5, 10))
-
-	// Create a closure where a is 5
-	// call the outer function, which returns the inner function, thus call it as well
-	// times(5)(10) or
-	// multiplyBy5(10)
-	multiplyBy5 := times(5)
-
-	times100 := times(100)
-
-	fmt.Println(times(5)(10))
-	fmt.Println(multiplyBy5(10))
-	fmt.Println(times100(2))
-}
-
 // Everything in Go is passed by value.
 // In pass by value, the actual value of the argument is passed to the function.
 // For example, in the below function, the parameter x is a copy of the value passed to it.
@@ -457,20 +434,6 @@ func increment_byval(x int) int {
 // We want the address of the original argument to be able to modify it!
 func increment_byptr(x *int) {
 	*x++
-}
-
-// A variadic function takes in a variable number of arguments
-// Essentially, nums is now a slice of int values:
-func sum(nums ...int) int {
-	total := 0
-	for _, n := range nums {
-		total += n
-	}
-	return total
-}
-
-func giveMeZero() int {
-	return 0
 }
 
 func multiply(a, b int) int {

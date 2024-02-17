@@ -39,7 +39,7 @@ func main() {
 	// basics.DisplayTime()
 	// basics.LoopBasics()
 	// basics.StructBasics()
-	basics.MethodBasics()
+	// basics.MethodBasics()
 	// basics.JsonBasics()
 
 	// basics.PointerBasics()
@@ -47,7 +47,7 @@ func main() {
 	// basics.ImmutabilityBasics()
 	// basics.ErrorBasics()
 	// basics.ArrayBasics()
-	// basics.SliceBasics()
+	basics.SliceBasics()
 	// basics.MapBasics()
 	// basics.InterfaceBasics()
 
@@ -60,6 +60,9 @@ func main() {
 	// networking.NetworkingBasics()
 
 	// basics.ConcurrencyBasics()
+	// basics.WGBasics()
+	// basics.ConcurrentReadWrite()
+	// basics.ChannelBasics()
 
 	// exercises.NumberGuessingGame()
 	// exercises.ScoreManager()
